@@ -9,7 +9,7 @@ public class Transaction {
 
     private String entry_reference;
     private String merchant_category_code;
-    //public TransactionAmount transaction_amount;
+    private TransactionAmount transaction_amount;
     //public Creditor creditor;
     //public CreditorAccount creditor_account;
     //public Debtor debtor;
@@ -22,7 +22,6 @@ public class Transaction {
     private String transaction_date;
     //public BalanceAfterTransaction balance_after_transaction;
     private String reference_number;
-    private List<String> remittance_information;
     
     
 	public Transaction() {
@@ -41,7 +40,6 @@ public class Transaction {
 		this.value_date = value_date;
 		this.transaction_date = transaction_date;
 		this.reference_number = reference_number;
-		this.remittance_information = remittance_information;
 	}
 	public String getEntry_reference() {
 		return entry_reference;
@@ -67,12 +65,7 @@ public class Transaction {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getBooking_date() {
-		return booking_date;
-	}
-	public void setBooking_date(String booking_date) {
-		this.booking_date = booking_date;
-	}
+	
 	public String getValue_date() {
 		return value_date;
 	}
@@ -91,12 +84,12 @@ public class Transaction {
 	public void setReference_number(String reference_number) {
 		this.reference_number = reference_number;
 	}
-	public List<String> getRemittance_information() {
-		return remittance_information;
+	public TransactionAmount getTransaction_amount() {
+		return transaction_amount;
 	}
-	public void setRemittance_information(List<String> remittance_information) {
-		this.remittance_information = remittance_information;
+	public void setTransaction_amount(TransactionAmount transaction_amount) {
+		this.transaction_amount = transaction_amount;
 	}
-    
+	
     
 }

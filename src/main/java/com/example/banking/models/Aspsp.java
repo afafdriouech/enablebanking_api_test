@@ -12,6 +12,12 @@ public class ASPSP {
 		super();
 	}
 	
+	
+	public ASPSP(String name) {
+		this.name = name;
+	}
+
+
 	public ASPSP(String name, String country) {
 		super();
 		this.name = name;

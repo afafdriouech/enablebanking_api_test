@@ -1,10 +1,14 @@
 package com.example.banking;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Scanner;
 import org.springframework.boot.CommandLineRunner;
+
+import com.example.banking.models.Transaction;
 
 
 
@@ -41,8 +45,20 @@ public class Runner implements CommandLineRunner{
 			System.out.println("no accounts");
 		else
 			System.out.println("Session created");
-		String transactions=ApiController.getTransactions(session);
-		System.out.println(transactions);
+		
+		//operations summary
+		System.out.println("Summary of operations:");	
+		ArrayList<Transaction> transa=ApiController.getTransactions(session);
+		ArrayList<Double> transAmount=new ArrayList<Double>();
+		String str;
+		for(Transaction t:transa)
+		{
+			str=t.getTransaction_amount().getAmount();
+			transAmount.add(Double.parseDouble(str));
+		}
+		System.out.println("Number of transactions: "+transa.size());
+		System.out.println("Transaction with the maximum value: "+Collections.max(transAmount));
+
 	}
 	
 }
