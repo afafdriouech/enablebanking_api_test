@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Root {
 	
-	private LinkedHashSet<Aspsp> aspsps;
+    private LinkedHashSet<ASPSP> aspsps;
 
-	public LinkedHashSet<Aspsp> getAspsps() {
+	public LinkedHashSet<ASPSP> getAspsps() {
 		return aspsps;
 	}
 
-	public void setAspsps(LinkedHashSet<Aspsp> aspsps) {
+	public void setAspsps(LinkedHashSet<ASPSP> aspsps) {
 		this.aspsps = aspsps;
 	}
 

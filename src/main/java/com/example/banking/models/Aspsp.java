@@ -3,11 +3,20 @@ package com.example.banking.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Aspsp {
+public class ASPSP {
 
-	private String name;
-	private String country;
+    private String name;
+    private String country;
     
+	public ASPSP() {
+		super();
+	}
+	
+	public ASPSP(String name, String country) {
+		super();
+		this.name = name;
+		this.country = country;
+	}
 	public String getName() {
 		return name;
 	}

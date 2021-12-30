@@ -1,20 +1,42 @@
 package com.example.banking.models;
 
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AuthentUrl {
 
-    private Aspsp aspsp;
+    private Access access;
+    private ASPSP aspsp;    
     private String state;
     private String redirect_url;
-    private String language;
-    private Aspsp getAspsp() {
+    
+    
+    
+    
+    public AuthentUrl() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public AuthentUrl(Access access, ASPSP aspsp, String state, String redirect_url) {
+		this.access = access;
+		this.aspsp = new ASPSP(aspsp.getName(),aspsp.getCountry());
+		this.state = state;
+		this.redirect_url = redirect_url;
+	}
+
+	public ASPSP getAspsp() {
 		return aspsp;
 	}
-	public void setAspsp(Aspsp aspsp) {
+
+	public void setAspsp(ASPSP aspsp) {
 		this.aspsp = aspsp;
 	}
+
+
+
 	public String getState() {
 		return state;
 	}
@@ -27,16 +49,11 @@ public class AuthentUrl {
 	public void setRedirect_url(String redirect_url) {
 		this.redirect_url = redirect_url;
 	}
-	public String getLanguage() {
-		return language;
+	public Access getAccess() {
+		return access;
 	}
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-	@Override
-	public String toString() {
-		return "AuthentUrl [aspsp=" + aspsp + ", state=" + state + ", redirect_url=" + redirect_url + ", language="
-				+ language + "]";
+	public void setAccess(Access access) {
+		this.access = access;
 	}
     
 }

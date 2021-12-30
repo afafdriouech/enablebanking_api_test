@@ -16,7 +16,6 @@ public class Runner implements CommandLineRunner{
 		Scanner scanner=new Scanner(System.in);
 		System.out.println("********************* Welcome to enable banking *********************");
 		System.out.println("------ This is the list of available banks ------");
-		//String s=scanner.nextLine();		
 		
 		//display list of available banks
 		LinkedHashSet<String> banks=ApiController.banksList();
@@ -24,13 +23,17 @@ public class Runner implements CommandLineRunner{
         while (itr.hasNext()){
     		System.out.print(itr.next());
         }
+        
 		//user inputs bank id or name
 		System.out.println("------ Enter a bank name ------ \n");
 		String chosenBank=scanner.nextLine();
+		
 		//display authentication link
 		System.out.println("Open your authentication link in a browser: \n");
-		String url=ApiController.getAuthLink("nordea");
+		String url=ApiController.getAuthLink(chosenBank);
 		System.out.println(url);
+		System.out.println("Enter the authorization code that was given to you here: ");
+		String code=scanner.nextLine();
 		//waits for authorization code
 		//
 	}
