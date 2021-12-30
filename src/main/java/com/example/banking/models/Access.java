@@ -6,6 +6,12 @@ public class Access {
 
     private ZonedDateTime valid_until;
 
+    
+	public Access() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public ZonedDateTime getValid_until() {
 		return valid_until;
 	}

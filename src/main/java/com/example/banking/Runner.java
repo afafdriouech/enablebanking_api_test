@@ -28,14 +28,21 @@ public class Runner implements CommandLineRunner{
 		System.out.println("------ Enter a bank name ------ \n");
 		String chosenBank=scanner.nextLine();
 		
-		//display authentication link
 		System.out.println("Open your authentication link in a browser: \n");
 		String url=ApiController.getAuthLink(chosenBank);
+		//display authentication link
 		System.out.println(url);
+		//waits for authorization code
 		System.out.println("Enter the authorization code that was given to you here: ");
 		String code=scanner.nextLine();
-		//waits for authorization code
-		//
+		//session created
+		String session=ApiController.createSession(code);
+		if (session== null)
+			System.out.println("no accounts");
+		else
+			System.out.println("Session created");
+		String transactions=ApiController.getTransactions(session);
+		System.out.println(transactions);
 	}
 	
 }

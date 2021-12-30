@@ -13,8 +13,6 @@ public class AuthentUrl {
     private String redirect_url;
     
     
-    
-    
     public AuthentUrl() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -34,8 +32,6 @@ public class AuthentUrl {
 	public void setAspsp(ASPSP aspsp) {
 		this.aspsp = aspsp;
 	}
-
-
 
 	public String getState() {
 		return state;
