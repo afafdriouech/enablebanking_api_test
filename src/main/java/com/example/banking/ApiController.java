@@ -5,10 +5,8 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.List;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -40,14 +38,6 @@ public class ApiController {
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		HttpEntity<String> entity=new HttpEntity<String>(headers);
 		RestTemplate restTemplate= new RestTemplate();
-		
-		//ResponseEntity<Banks> response = restTemplate.exchange(
-		//    url, HttpMethod.GET, entity, new ParameterizedTypeReference<Banks>() {});
-		/*ResponseEntity<Banks> response = restTemplate.exchange(
-		    url, HttpMethod.GET, entity, Banks.class);
-		Banks banks = response.getBody();
-		//return banks.toString();
-		return banks.getBank();*/
 		
 		ResponseEntity<Root> response = restTemplate.exchange(
 		    url, HttpMethod.GET, entity, new ParameterizedTypeReference<Root>() {});
@@ -122,12 +112,6 @@ public class ApiController {
 		HttpEntity<LocalDate> entity=new HttpEntity<LocalDate>(date_from,headers);
 		RestTemplate restTemplate= new RestTemplate();
 		ResponseEntity<Transactions> response = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<Transactions>() {});
-		//return response.getBody().getTransactions();
-		/*ArrayList<String> translist=new ArrayList<String>();
-		for(Transaction t:response.getBody().getTransactions())
-		{
-			translist.add(t.toString());
-		}*/
 		return (ArrayList<Transaction>) response.getBody().getTransactions();
 	}
 }

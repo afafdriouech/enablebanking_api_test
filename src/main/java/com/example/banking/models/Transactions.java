@@ -14,7 +14,6 @@ public class Transactions {
     
 	public Transactions() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Transactions(List<Transaction> transactions, String continuation_key) {

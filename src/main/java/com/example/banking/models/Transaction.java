@@ -1,6 +1,5 @@
 package com.example.banking.models;
 
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -8,70 +7,33 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Transaction {
 
     private String entry_reference;
-    private String merchant_category_code;
     private TransactionAmount transaction_amount;
-    //public Creditor creditor;
-    //public CreditorAccount creditor_account;
-    //public Debtor debtor;
-    //public DebtorAccount debtor_account;
-    //public BankTransactionCode bank_transaction_code;
-    private String credit_debit_indicator;
-    private String status;
-    private String booking_date;
-    private String value_date;
     private String transaction_date;
-    //public BalanceAfterTransaction balance_after_transaction;
     private String reference_number;
     
     
 	public Transaction() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
-	public Transaction(String entry_reference, String merchant_category_code, String credit_debit_indicator,
-			String status, String booking_date, String value_date, String transaction_date, String reference_number,
-			List<String> remittance_information) {
+
+	
+	public Transaction(String entry_reference, TransactionAmount transaction_amount, String transaction_date,
+			String reference_number) {
 		super();
 		this.entry_reference = entry_reference;
-		this.merchant_category_code = merchant_category_code;
-		this.credit_debit_indicator = credit_debit_indicator;
-		this.status = status;
-		this.booking_date = booking_date;
-		this.value_date = value_date;
+		this.transaction_amount = transaction_amount;
 		this.transaction_date = transaction_date;
 		this.reference_number = reference_number;
 	}
+
+
 	public String getEntry_reference() {
 		return entry_reference;
 	}
 	public void setEntry_reference(String entry_reference) {
 		this.entry_reference = entry_reference;
 	}
-	public String getMerchant_category_code() {
-		return merchant_category_code;
-	}
-	public void setMerchant_category_code(String merchant_category_code) {
-		this.merchant_category_code = merchant_category_code;
-	}
-	public String getCredit_debit_indicator() {
-		return credit_debit_indicator;
-	}
-	public void setCredit_debit_indicator(String credit_debit_indicator) {
-		this.credit_debit_indicator = credit_debit_indicator;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	
-	public String getValue_date() {
-		return value_date;
-	}
-	public void setValue_date(String value_date) {
-		this.value_date = value_date;
-	}
+
 	public String getTransaction_date() {
 		return transaction_date;
 	}
