@@ -1,6 +1,5 @@
 package com.example.banking.models;
 
-import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -15,7 +14,6 @@ public class AuthentUrl {
     
     public AuthentUrl() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public AuthentUrl(Access access, ASPSP aspsp, String state, String redirect_url) {

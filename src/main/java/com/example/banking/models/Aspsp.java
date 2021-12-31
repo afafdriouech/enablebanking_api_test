@@ -13,9 +13,9 @@ public class ASPSP {
 	}
 	
 	
-	public ASPSP(String name) {
+	/*public ASPSP(String name) {
 		this.name = name;
-	}
+	}*/
 
 
 	public ASPSP(String name, String country) {

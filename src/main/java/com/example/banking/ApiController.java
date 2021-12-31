@@ -5,8 +5,6 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -20,7 +18,6 @@ import com.example.banking.models.ASPSP;
 import com.example.banking.models.Access;
 import com.example.banking.models.AuthentUrl;
 import com.example.banking.models.Code;
-import com.example.banking.models.Query;
 import com.example.banking.models.Root;
 import com.example.banking.models.Session;
 import com.example.banking.models.Transaction;
@@ -29,9 +26,13 @@ import com.example.banking.models.UrlResponse;
 
 public class ApiController {
 	
-	public static LinkedHashSet<String> banksList()
+	private static String token="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhMjE0MzYxLWMyZmMtNDg3NS04YzdkLTI2NWEwMjgyOGIxMCJ9."
+			+ "eyJpc3MiOiJlbmFibGViYW5raW5nLmNvbSIsImF1ZCI6ImFwaS50aWxpc3kuY29tIiwiaWF0IjoxNjQwOTM0MDEwLCJleHAiOjE2NDEwMjA0MDB9."
+			+ "hRvkLjl7wR0Ct7aACgWNkSruGhW-T67Y0eg4Kr1vdLq0yzWYyTGHWY9qtp6l9z-DmTXCp0dULsw-_I7kvUJ8CThMR-V7Vr48bCiaPU9-zjvJUDVA6ndy5sSBv"
+			+ "_A_JyD3mNjvVwV63iYg0haD91VWgK6WcI2vbLpGGY9mt2hM_4riCm_yzC7W4Tg_Hc7xaFbAMP3SWTYdt9bH0qWQxvYTe5a17ODRkPZ_Qy75foXlErk5C7xOVE9U8uDjzmFiBphn44wc5P04_joylBtxe4_3iUT32TNoVXBoMRAw-W0EuYjDtlNHRUHChEmYyTV50V3QE75V6iOlNz7XYnE0zEMZ5xLzbNEpbG4UCKT8nSzDjz_POXKQpcGCEVI2a_RTSJLt5nSEyXFRaFnmnvKkDKRfwuzYRIuLRM1o8qb4p77hyc0hfEvi2JObtNOiGh7mT5Fid13X3f0HvRTt_sdX7wDH-UeAc1oNLJADTMxqXnMn1WHSnB1WuE1f32mv49b2FL8Z9QXztJJv8AoYDKA5Z355TV3gZiu_LMq5ei0QmvWXxDyxAe7AKRM4u7eQDuSyrS4k68yxNNtW-TvX1DFwGC2IiaMQUe3aqkiE4e7LqzhNVDFvREcVnFTP6osoa_9n-ekl8kY-oQq7iysxLyos-WKosjNOeevF2qBwbLlRdGNYOoM";
+	
+	public static Root banksList() throws Exception
 	{
-		String token="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhMjE0MzYxLWMyZmMtNDg3NS04YzdkLTI2NWEwMjgyOGIxMCJ9.eyJpc3MiOiJlbmFibGViYW5raW5nLmNvbSIsImF1ZCI6ImFwaS50aWxpc3kuY29tIiwiaWF0IjoxNjQwODE4ODAwLCJleHAiOjE2NDA5MDUwMDB9.kDvW0mqJVEa7HOgXYYBFoAPjipHkhHfdNUR3ZpFeldrrsAmMfsoJRvuPiJxQE-T50lyaNVA7xiYY6VfF_10ATDWoGC47ZOInhOyIIZnRspxGIavYiPF0zfaAu6vyztIHOHKd40m7oMH-UjLIyWeaXXxPV-KwXyd3K4krOK8J22Ykk9dGnQae9NSUeVeP11pO-KAL_4YH0coj8xgCXT0YHAy1-Tymjb1zFh185YfPV8SvE--ILuh4w20RMbe5lMsqNHLVlTbt4srwsLZIUEP3GlVzs7NHrhR_f8nefqFfbrRi4yRr6VfSWke2Y32009mE1qmuSvrcBI33C2XuSumVnqimIqIkAmUL7nHeqBgnDMFcSfLbQHj8E9mhiXORXJGv_3-yCjU-PzBxXQuiWe4bscvtVilBeYRum-11pMYl_iR9T1R9kEjzwdezs0DRSDhZv0jj5i26IiJOWiM4XXhaRYf_pXPvFOxMMsjLAAvvI49laC1K4h3QRu6uDAZr9VSheDNA77SVdTC-RHvA3vSGczIoVCn3-S6mThnuMGEnOPWGW12ajfHXAhPWpOH70JvGaDENuVvPxG8P32PuU6erki1Wt-MvsHzI05zNVnveOFzXvlO6H6g1beVcnJLN6X4uGDZVCFOCpFHLSnuDEx_dSDJp48WVT0wY5yQpI-zD028";
 		String url="https://api.tilisy.com/aspsps";
 	    HttpHeaders headers=new HttpHeaders();  
 		headers.set("Authorization", "Bearer "+ token);
@@ -41,29 +42,23 @@ public class ApiController {
 		
 		ResponseEntity<Root> response = restTemplate.exchange(
 		    url, HttpMethod.GET, entity, new ParameterizedTypeReference<Root>() {});
+		if(response.getStatusCode().value()!=200)
+			throw new Exception("no available aspsps");
 		Root root=response.getBody();
-        
-        LinkedHashSet<String> uniqueNames= new LinkedHashSet<String>();
-        Iterator itr = root.getAspsps().iterator();     
-        while (itr.hasNext()){
-        	uniqueNames.add(itr.next().toString());
-        }
-
-        return uniqueNames;
+        //List<ASPSP> banks= root.getAspsps();
+		return root;
 	}
 	
-	public static String getAuthLink(String bankName)
+	public static String getAuthLink(String bankName,String country) throws Exception
 	{
-		String token="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhMjE0MzYxLWMyZmMtNDg3NS04YzdkLTI2NWEwMjgyOGIxMCJ9.eyJpc3MiOiJlbmFibGViYW5raW5nLmNvbSIsImF1ZCI6ImFwaS50aWxpc3kuY29tIiwiaWF0IjoxNjQwODE4ODAwLCJleHAiOjE2NDA5MDUwMDB9.kDvW0mqJVEa7HOgXYYBFoAPjipHkhHfdNUR3ZpFeldrrsAmMfsoJRvuPiJxQE-T50lyaNVA7xiYY6VfF_10ATDWoGC47ZOInhOyIIZnRspxGIavYiPF0zfaAu6vyztIHOHKd40m7oMH-UjLIyWeaXXxPV-KwXyd3K4krOK8J22Ykk9dGnQae9NSUeVeP11pO-KAL_4YH0coj8xgCXT0YHAy1-Tymjb1zFh185YfPV8SvE--ILuh4w20RMbe5lMsqNHLVlTbt4srwsLZIUEP3GlVzs7NHrhR_f8nefqFfbrRi4yRr6VfSWke2Y32009mE1qmuSvrcBI33C2XuSumVnqimIqIkAmUL7nHeqBgnDMFcSfLbQHj8E9mhiXORXJGv_3-yCjU-PzBxXQuiWe4bscvtVilBeYRum-11pMYl_iR9T1R9kEjzwdezs0DRSDhZv0jj5i26IiJOWiM4XXhaRYf_pXPvFOxMMsjLAAvvI49laC1K4h3QRu6uDAZr9VSheDNA77SVdTC-RHvA3vSGczIoVCn3-S6mThnuMGEnOPWGW12ajfHXAhPWpOH70JvGaDENuVvPxG8P32PuU6erki1Wt-MvsHzI05zNVnveOFzXvlO6H6g1beVcnJLN6X4uGDZVCFOCpFHLSnuDEx_dSDJp48WVT0wY5yQpI-zD028";
 		String url="https://api.tilisy.com/auth";
 	    HttpHeaders headers=new HttpHeaders();  
 		headers.set("Authorization", "Bearer "+ token);
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-		
-		ZonedDateTime dateTime = ZonedDateTime.now().plus(1, ChronoUnit.DAYS);		
+		ZonedDateTime dateTime = ZonedDateTime.now().plus(1, ChronoUnit.MONTHS);
 		
 		Access access=new Access(dateTime);
-		ASPSP aspsp=new ASPSP(bankName,"FI");
+		ASPSP aspsp=new ASPSP(bankName,country);
 		String state="3a57e2d3-2e0c-4336-af9b-7fa94f0606a3";
 		String redirect_url="https://www.nordea.fi/";
 		AuthentUrl auth=new AuthentUrl(access,aspsp,state,redirect_url);
@@ -73,12 +68,14 @@ public class ApiController {
 		
 		ResponseEntity<UrlResponse> response = restTemplate.exchange(
 		    url, HttpMethod.POST, entity, new ParameterizedTypeReference<UrlResponse>() {});
+		
+		if(response.getStatusCode().value()!=200)
+			throw new Exception("can't generate the url");
 		return response.getBody().getUrl();
 	}
 	
-	public static String createSession(String sessionCode)
+	public static String createSession(String sessionCode) throws Exception
 	{
-		String token="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhMjE0MzYxLWMyZmMtNDg3NS04YzdkLTI2NWEwMjgyOGIxMCJ9.eyJpc3MiOiJlbmFibGViYW5raW5nLmNvbSIsImF1ZCI6ImFwaS50aWxpc3kuY29tIiwiaWF0IjoxNjQwODE4ODAwLCJleHAiOjE2NDA5MDUwMDB9.kDvW0mqJVEa7HOgXYYBFoAPjipHkhHfdNUR3ZpFeldrrsAmMfsoJRvuPiJxQE-T50lyaNVA7xiYY6VfF_10ATDWoGC47ZOInhOyIIZnRspxGIavYiPF0zfaAu6vyztIHOHKd40m7oMH-UjLIyWeaXXxPV-KwXyd3K4krOK8J22Ykk9dGnQae9NSUeVeP11pO-KAL_4YH0coj8xgCXT0YHAy1-Tymjb1zFh185YfPV8SvE--ILuh4w20RMbe5lMsqNHLVlTbt4srwsLZIUEP3GlVzs7NHrhR_f8nefqFfbrRi4yRr6VfSWke2Y32009mE1qmuSvrcBI33C2XuSumVnqimIqIkAmUL7nHeqBgnDMFcSfLbQHj8E9mhiXORXJGv_3-yCjU-PzBxXQuiWe4bscvtVilBeYRum-11pMYl_iR9T1R9kEjzwdezs0DRSDhZv0jj5i26IiJOWiM4XXhaRYf_pXPvFOxMMsjLAAvvI49laC1K4h3QRu6uDAZr9VSheDNA77SVdTC-RHvA3vSGczIoVCn3-S6mThnuMGEnOPWGW12ajfHXAhPWpOH70JvGaDENuVvPxG8P32PuU6erki1Wt-MvsHzI05zNVnveOFzXvlO6H6g1beVcnJLN6X4uGDZVCFOCpFHLSnuDEx_dSDJp48WVT0wY5yQpI-zD028";
 		String url="https://api.tilisy.com/sessions";
 		Code code=new Code(sessionCode);
 
@@ -86,32 +83,30 @@ public class ApiController {
 		headers.set("Authorization", "Bearer "+ token);
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		
-		//String code=sessionCode;
 		HttpEntity<Code> entity=new HttpEntity<>(code,headers);
 		RestTemplate restTemplate= new RestTemplate();
 		
 		ResponseEntity<Session> response = restTemplate.exchange(
 		    url, HttpMethod.POST, entity, new ParameterizedTypeReference<Session>() {});
 		if(response.getBody().getAccounts().size()==0)
-			return null;
+			throw new Exception("No accounts");
 		else
 			return response.getBody().getAccounts().get(0).getUid();
 	}
 	
-	public static ArrayList<Transaction> getTransactions(String accountUid)
+	public static ArrayList<Transaction> getTransactions(String accountUid) throws Exception
 	{
-		String token="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhMjE0MzYxLWMyZmMtNDg3NS04YzdkLTI2NWEwMjgyOGIxMCJ9.eyJpc3MiOiJlbmFibGViYW5raW5nLmNvbSIsImF1ZCI6ImFwaS50aWxpc3kuY29tIiwiaWF0IjoxNjQwODE4ODAwLCJleHAiOjE2NDA5MDUwMDB9.kDvW0mqJVEa7HOgXYYBFoAPjipHkhHfdNUR3ZpFeldrrsAmMfsoJRvuPiJxQE-T50lyaNVA7xiYY6VfF_10ATDWoGC47ZOInhOyIIZnRspxGIavYiPF0zfaAu6vyztIHOHKd40m7oMH-UjLIyWeaXXxPV-KwXyd3K4krOK8J22Ykk9dGnQae9NSUeVeP11pO-KAL_4YH0coj8xgCXT0YHAy1-Tymjb1zFh185YfPV8SvE--ILuh4w20RMbe5lMsqNHLVlTbt4srwsLZIUEP3GlVzs7NHrhR_f8nefqFfbrRi4yRr6VfSWke2Y32009mE1qmuSvrcBI33C2XuSumVnqimIqIkAmUL7nHeqBgnDMFcSfLbQHj8E9mhiXORXJGv_3-yCjU-PzBxXQuiWe4bscvtVilBeYRum-11pMYl_iR9T1R9kEjzwdezs0DRSDhZv0jj5i26IiJOWiM4XXhaRYf_pXPvFOxMMsjLAAvvI49laC1K4h3QRu6uDAZr9VSheDNA77SVdTC-RHvA3vSGczIoVCn3-S6mThnuMGEnOPWGW12ajfHXAhPWpOH70JvGaDENuVvPxG8P32PuU6erki1Wt-MvsHzI05zNVnveOFzXvlO6H6g1beVcnJLN6X4uGDZVCFOCpFHLSnuDEx_dSDJp48WVT0wY5yQpI-zD028";
 		String url="https://api.tilisy.com/accounts/"+accountUid+"/transactions";
 	    HttpHeaders headers=new HttpHeaders();  
 		headers.set("Authorization", "Bearer "+ token);
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		
-		
-		//Query query= new Query(); 
-		LocalDate date_from= LocalDate.now().minus(3, ChronoUnit.DAYS);
+		LocalDate date_from= LocalDate.now().minus(1, ChronoUnit.MONTHS);
 		HttpEntity<LocalDate> entity=new HttpEntity<LocalDate>(date_from,headers);
 		RestTemplate restTemplate= new RestTemplate();
 		ResponseEntity<Transactions> response = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<Transactions>() {});
+		if(response.getStatusCode().value()!=200)
+			throw new Exception("can't fetch transactions");
 		return (ArrayList<Transaction>) response.getBody().getTransactions();
 	}
 }
