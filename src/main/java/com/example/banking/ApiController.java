@@ -18,6 +18,7 @@ import com.example.banking.models.ASPSP;
 import com.example.banking.models.Access;
 import com.example.banking.models.AuthentUrl;
 import com.example.banking.models.Code;
+import com.example.banking.models.JwtClass;
 import com.example.banking.models.Root;
 import com.example.banking.models.Session;
 import com.example.banking.models.Transaction;
@@ -26,13 +27,12 @@ import com.example.banking.models.UrlResponse;
 
 public class ApiController {
 	
-	private static String token="eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImNhMjE0MzYxLWMyZmMtNDg3NS04YzdkLTI2NWEwMjgyOGIxMCJ9."
-			+ "eyJpc3MiOiJlbmFibGViYW5raW5nLmNvbSIsImF1ZCI6ImFwaS50aWxpc3kuY29tIiwiaWF0IjoxNjQwOTM0MDEwLCJleHAiOjE2NDEwMjA0MDB9."
-			+ "hRvkLjl7wR0Ct7aACgWNkSruGhW-T67Y0eg4Kr1vdLq0yzWYyTGHWY9qtp6l9z-DmTXCp0dULsw-_I7kvUJ8CThMR-V7Vr48bCiaPU9-zjvJUDVA6ndy5sSBv"
-			+ "_A_JyD3mNjvVwV63iYg0haD91VWgK6WcI2vbLpGGY9mt2hM_4riCm_yzC7W4Tg_Hc7xaFbAMP3SWTYdt9bH0qWQxvYTe5a17ODRkPZ_Qy75foXlErk5C7xOVE9U8uDjzmFiBphn44wc5P04_joylBtxe4_3iUT32TNoVXBoMRAw-W0EuYjDtlNHRUHChEmYyTV50V3QE75V6iOlNz7XYnE0zEMZ5xLzbNEpbG4UCKT8nSzDjz_POXKQpcGCEVI2a_RTSJLt5nSEyXFRaFnmnvKkDKRfwuzYRIuLRM1o8qb4p77hyc0hfEvi2JObtNOiGh7mT5Fid13X3f0HvRTt_sdX7wDH-UeAc1oNLJADTMxqXnMn1WHSnB1WuE1f32mv49b2FL8Z9QXztJJv8AoYDKA5Z355TV3gZiu_LMq5ei0QmvWXxDyxAe7AKRM4u7eQDuSyrS4k68yxNNtW-TvX1DFwGC2IiaMQUe3aqkiE4e7LqzhNVDFvREcVnFTP6osoa_9n-ekl8kY-oQq7iysxLyos-WKosjNOeevF2qBwbLlRdGNYOoM";
+
+	static String token;
 	
 	public static Root banksList() throws Exception
 	{
+		token=JwtClass.generateJWT();
 		String url="https://api.tilisy.com/aspsps";
 	    HttpHeaders headers=new HttpHeaders();  
 		headers.set("Authorization", "Bearer "+ token);
@@ -51,6 +51,7 @@ public class ApiController {
 	
 	public static String getAuthLink(String bankName,String country) throws Exception
 	{
+		token=JwtClass.generateJWT();
 		String url="https://api.tilisy.com/auth";
 	    HttpHeaders headers=new HttpHeaders();  
 		headers.set("Authorization", "Bearer "+ token);
@@ -76,6 +77,7 @@ public class ApiController {
 	
 	public static String createSession(String sessionCode) throws Exception
 	{
+		token=JwtClass.generateJWT();
 		String url="https://api.tilisy.com/sessions";
 		Code code=new Code(sessionCode);
 
@@ -96,6 +98,7 @@ public class ApiController {
 	
 	public static ArrayList<Transaction> getTransactions(String accountUid) throws Exception
 	{
+		token=JwtClass.generateJWT();
 		String url="https://api.tilisy.com/accounts/"+accountUid+"/transactions";
 	    HttpHeaders headers=new HttpHeaders();  
 		headers.set("Authorization", "Bearer "+ token);

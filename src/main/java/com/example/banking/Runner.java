@@ -1,5 +1,6 @@
 package com.example.banking;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -8,15 +9,19 @@ import java.util.Scanner;
 import org.springframework.boot.CommandLineRunner;
 
 import com.example.banking.models.ASPSP;
+import com.example.banking.models.JwtClass;
 import com.example.banking.models.Transaction;
+
+import io.jsonwebtoken.security.InvalidKeyException;
 
 
 
 public class Runner implements CommandLineRunner{
 
 	@Override
-	public void run(String... args){
+	public void run(String... args) throws Exception{
 
+		System.out.println(JwtClass.generateJWT());
 		try (Scanner scanner = new Scanner(System.in)) {
 			System.out.println("********************* Welcome to enable banking *********************");
 			System.out.println("------ This is the list of available banks ------");
