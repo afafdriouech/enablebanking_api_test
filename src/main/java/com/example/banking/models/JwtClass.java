@@ -21,7 +21,7 @@ public class JwtClass {
 	
 	private final static int EXPIRY_DAYS = 1;
 	private final static String app_id="ca214361-c2fc-4875-8c7d-265a02828b10";
-	static File secretKeyF = new File("/..");//rsa key file path
+	static File secretKeyF = new File("/");//rsa key file path
 	
 	public static String generateJWT() throws Exception
 	{
