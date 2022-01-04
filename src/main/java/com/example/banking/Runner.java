@@ -2,15 +2,12 @@ package com.example.banking;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Scanner;
 import org.springframework.boot.CommandLineRunner;
 
 import com.example.banking.models.ASPSP;
-import com.example.banking.models.JwtClass;
 import com.example.banking.models.Transaction;
-
 
 
 public class Runner implements CommandLineRunner{
@@ -18,6 +15,7 @@ public class Runner implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception{
 
+		//System.out.println(JwtClass.generateJWT());
 		try (Scanner scanner = new Scanner(System.in)) {
 			System.out.println("********************* Welcome to enable banking *********************");
 			System.out.println("------ This is the list of available banks ------");
@@ -25,16 +23,11 @@ public class Runner implements CommandLineRunner{
 			//display list of available banks
 			try {
 			List<ASPSP> banks=ApiController.banksList().getAspsps();
-			LinkedHashSet<String> uniqueNames= new LinkedHashSet<String>();
 			for(ASPSP bank:banks)
 			{
-				uniqueNames.add(bank.getName()+" "+bank.getCountry());
+				System.out.println(bank.getName()+" "+bank.getCountry());
 			}
-			
-			for(String name:uniqueNames)
-			{
-				System.out.println(name);
-			}
+
 			}catch(Exception e)
 			{
 				System.err.println("can't retrieve list of banks");
@@ -54,6 +47,7 @@ public class Runner implements CommandLineRunner{
 			System.out.println(url);
 			}catch (Exception e) {
 				System.err.println("Can't generate link for you");
+				return;
 			}
 			
 			//waits for authorization code
