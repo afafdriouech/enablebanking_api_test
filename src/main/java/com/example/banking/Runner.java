@@ -55,7 +55,7 @@ public class Runner implements CommandLineRunner{
 			String code=scanner.nextLine();
 			
 			//session created
-			String session=ApiController.createSession(code);
+			ArrayList<String> session=ApiController.createSession(code);
 			if (session== null)
 				System.out.println("no accounts");
 			else
@@ -64,7 +64,10 @@ public class Runner implements CommandLineRunner{
 			//operations summary
 			System.out.println("Summary of operations:");
 			try {
-			ArrayList<Transaction> transa=ApiController.getTransactions(session);
+			for(String uid: session)
+			{
+			System.out.println("summary for uid="+uid);
+			ArrayList<Transaction> transa=ApiController.getTransactions(uid);
 			ArrayList<Double> transAmount=new ArrayList<Double>();
 			String str;
 			Double sum=0.0;
@@ -77,6 +80,7 @@ public class Runner implements CommandLineRunner{
 			System.out.println("Number of transactions: "+transa.size());
 			System.out.println("Transaction with the maximum value: "+Collections.max(transAmount));
 			System.out.println("Total value of all transactions: "+sum);}
+			}
 			catch(Exception e) {
 				System.err.println("can't display summary of operations");
 			}

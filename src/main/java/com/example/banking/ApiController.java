@@ -75,11 +75,12 @@ public class ApiController {
 		return response.getBody().getUrl();
 	}
 	
-	public static String createSession(String sessionCode) throws Exception
+	public static ArrayList<String> createSession(String sessionCode) throws Exception
 	{
 		token=JwtClass.generateJWT();
 		String url="https://api.tilisy.com/sessions";
 		Code code=new Code(sessionCode);
+		ArrayList<String> uids=new ArrayList<String>();
 
 	    HttpHeaders headers=new HttpHeaders();  
 		headers.set("Authorization", "Bearer "+ token);
@@ -93,7 +94,11 @@ public class ApiController {
 		if(response.getBody().getAccounts().size()==0)
 			throw new Exception("No accounts");
 		else
-			return response.getBody().getAccounts().get(0).getUid();
+			for(int i=0;i<response.getBody().getAccounts().size();i++)
+			{
+				uids.add(response.getBody().getAccounts().get(i).getUid());
+			}
+			return uids;
 	}
 	
 	public static ArrayList<Transaction> getTransactions(String accountUid) throws Exception
