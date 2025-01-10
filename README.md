@@ -1,8 +1,8 @@
-# enableBanking Tilisy API
-Spring boot console application using Tilisy API: https://enablebanking.com/docs/tilisy/latest/#tilisy-api  
-   -In order to run the application,execute this command on command line: mvnw spring-boot:run  
-   -A list of available banks will be displayed on the console  
-   -Choose one bank, and you will get a redirectUrl that should be run in a browser in order to authenticate and get an authentication code  
-   -Enter the code on the command line, and a short summary of the user's bank transactions will be displayed.  
+# EnableBanking Tilisy API
+A Spring boot console application integrating the Tilisy API: https://enablebanking.com/docs/tilisy/latest/#tilisy-api  
+   - To run the application, use this command: mvnw spring-boot:run  
+   - A list of available banks will be displayed on the console  
+   - Select a bank, an authorization URL will be returned. Use the link to authorize. After authorizing you will be redirected with an authentication code.
+   - Enter the code on the command line. A summary of the user's bank transactions will be returned.  
 ![banks](banks.PNG)
 ![commands](commands.PNG)
